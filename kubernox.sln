@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4B50F729-C99F-48E4-B2EA-FCC85B7DBC2F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kubernox.Aspire.AppHost", "src\Kubernox.Aspire.AppHost\Kubernox.Aspire.AppHost.csproj", "{71CA2321-793D-40E4-ACCB-63D2993C0D65}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kubernox.Aspire.ServiceDefaults", "src\Kubernox.Aspire.ServiceDefaults\Kubernox.Aspire.ServiceDefaults.csproj", "{610A8B59-D294-4CF5-BCFC-9931E47714D0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{1D56D1FD-07E9-4320-A72A-91EA7BB153C5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{1B10639F-D1AA-4DDF-8A28-9528BB108603}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{B274E6EE-25E1-49D2-92BF-8BFC86C38C8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kubernox.Client", "src\Kubernox.Client\Kubernox.Client.csproj", "{15508192-A46B-4F23-A012-D8AE66604273}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{71CA2321-793D-40E4-ACCB-63D2993C0D65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71CA2321-793D-40E4-ACCB-63D2993C0D65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71CA2321-793D-40E4-ACCB-63D2993C0D65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71CA2321-793D-40E4-ACCB-63D2993C0D65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{610A8B59-D294-4CF5-BCFC-9931E47714D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{610A8B59-D294-4CF5-BCFC-9931E47714D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{610A8B59-D294-4CF5-BCFC-9931E47714D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{610A8B59-D294-4CF5-BCFC-9931E47714D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15508192-A46B-4F23-A012-D8AE66604273}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15508192-A46B-4F23-A012-D8AE66604273}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15508192-A46B-4F23-A012-D8AE66604273}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15508192-A46B-4F23-A012-D8AE66604273}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{71CA2321-793D-40E4-ACCB-63D2993C0D65} = {4B50F729-C99F-48E4-B2EA-FCC85B7DBC2F}
+		{610A8B59-D294-4CF5-BCFC-9931E47714D0} = {4B50F729-C99F-48E4-B2EA-FCC85B7DBC2F}
+		{1D56D1FD-07E9-4320-A72A-91EA7BB153C5} = {4B50F729-C99F-48E4-B2EA-FCC85B7DBC2F}
+		{1B10639F-D1AA-4DDF-8A28-9528BB108603} = {4B50F729-C99F-48E4-B2EA-FCC85B7DBC2F}
+		{B274E6EE-25E1-49D2-92BF-8BFC86C38C8F} = {4B50F729-C99F-48E4-B2EA-FCC85B7DBC2F}
+		{15508192-A46B-4F23-A012-D8AE66604273} = {B274E6EE-25E1-49D2-92BF-8BFC86C38C8F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A6364328-47E7-44A4-81F7-5D083D615E40}
+	EndGlobalSection
+EndGlobal
