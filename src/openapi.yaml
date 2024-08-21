@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.0.2
 info:
   title: Kubernox API
   version: 1.0.0
@@ -7,12 +7,12 @@ tags:
   - name: Authentication
     description: Manage user authentication, including login and token refresh operations.
   - name: SSHKeys
-    description: Manage application ssh keys.
+    description: Manage application SSH keys.
 
 paths:
   /api/identity/login:
     post:
-      summary: Se connecter et récupérer un JWT et un refresh token
+      summary: Log in and retrieve a JWT and refresh token
       tags:
         - Authentication
       requestBody:
@@ -20,34 +20,20 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                password:
-                  type: string
-              required:
-                - username
-                - password
+              $ref: '#/components/schemas/LoginRequest'
       responses:
         '200':
-          description: JWT et refresh token générés
+          description: JWT and refresh token generated
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  accessToken:
-                    type: string
-                    description: "JWT d'accès"
-                  refreshToken:
-                    type: string
-                    description: "Refresh token"
+                $ref: '#/components/schemas/TokenResponse'
         '401':
-          description: "Identifiants incorrects"
+          description: Invalid credentials
+
   /api/identity/refresh:
     post:
-      summary: Rafraîchir le JWT à l'aide d'un refresh token
+      summary: Refresh JWT using a refresh token
       tags:
         - Authentication
       requestBody:
@@ -55,159 +41,145 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                refreshToken:
-                  type: string
-                  description: "Le token de rafraîchissement"
-              required:
-                - refreshToken
+              $ref: '#/components/schemas/RefreshTokenRequest'
       responses:
         '200':
-          description: JWT et refresh token mis à jour
+          description: JWT and refresh token refreshed
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  accessToken:
-                    type: string
-                    description: "Nouveau JWT d'accès"
-                  refreshToken:
-                    type: string
-                    description: "Nouveau refresh token"
+                $ref: '#/components/schemas/TokenResponse'
         '401':
-          description: "Token de rafraîchissement invalide ou expiré"
+          description: Invalid or expired refresh token
+
   /api/identity/profile:
     get:
-      summary: Récupérer le profil utilisateur
+      summary: Retrieve the user profile
       tags:
         - User
       security:
         - bearerAuth: []
       responses:
         '200':
-          description: Profil de l'utilisateur
+          description: User profile retrieved
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  username:
-                    type: string
-                  email:
-                    type: string
+                $ref: '#/components/schemas/UserProfile'
         '401':
-          description: "JWT invalide ou manquant"
+          description: Invalid or missing JWT
 
   /api/ssh-keys:
     get:
-      summary: Lister toutes les clés SSH
+      summary: List all SSH keys
       tags:
         - SSHKeys
+      security:
+        - bearerAuth: []
       responses:
         '200':
-          description: Liste des clés SSH
+          description: List of SSH keys
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/SSHKey'
+
     post:
-      summary: Créer une clé SSH (génération ou importation)
+      summary: Create an SSH key (generation or import)
       tags:
         - SSHKeys
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                generate:
-                  type: boolean
-                  description: "Indique si une clé doit être générée"
-                publicKey:
-                  type: string
-                  description: "Clé publique à importer, nécessaire si 'generate' est false"
-              required:
-                - generate
+              $ref: '#/components/schemas/CreateSSHKeyRequest'
       responses:
         '201':
-          description: Clé SSH créée ou importée
+          description: SSH key created or imported
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SSHKey'
+                $ref: '#/components/schemas/SSHKeyPair'
+
   /api/ssh-keys/{id}:
     get:
-      summary: Récupérer une clé SSH spécifique
+      summary: Retrieve a specific SSH key
       tags:
         - SSHKeys
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
           required: true
           schema:
             type: string
+            format: uuid
+            description: GUID of the SSH key
       responses:
         '200':
-          description: Clé SSH récupérée
+          description: SSH key retrieved
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SSHKey'
         '404':
-          description: Clé SSH non trouvée
+          description: SSH key not found
+
     put:
-      summary: Mettre à jour une clé SSH
+      summary: Update a specific SSH key
       tags:
         - SSHKeys
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
           required: true
           schema:
             type: string
+            format: uuid
+            description: GUID of the SSH key
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                publicKey:
-                  type: string
-                  description: "Nouvelle clé publique"
-              required:
-                - publicKey
+              $ref: '#/components/schemas/UpdateSSHKeyRequest'
       responses:
         '200':
-          description: Clé SSH mise à jour
+          description: SSH key updated
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SSHKey'
         '404':
-          description: Clé SSH non trouvée
+          description: SSH key not found
+
     delete:
-      summary: Supprimer une clé SSH
+      summary: Delete a specific SSH key
       tags:
         - SSHKeys
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path
           required: true
           schema:
             type: string
+            format: uuid
+            description: GUID of the SSH key
       responses:
         '204':
-          description: Clé SSH supprimée
+          description: SSH key deleted
         '404':
-          description: Clé SSH non trouvée
+          description: SSH key not found
 
 components:
   securitySchemes:
@@ -217,11 +189,41 @@ components:
       bearerFormat: JWT
 
   schemas:
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+        - username
+        - password
+
+    RefreshTokenRequest:
+      type: object
+      properties:
+        refreshToken:
+          type: string
+      required:
+        - refreshToken
+
+    TokenResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: "JWT access token"
+        refreshToken:
+          type: string
+          description: "Refresh token"
+
     UserProfile:
       type: object
       properties:
         id:
           type: string
+          format: uuid
         username:
           type: string
         email:
@@ -232,6 +234,19 @@ components:
       properties:
         id:
           type: string
+          format: uuid
+        publicKey:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    SSHKeyPair:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
         publicKey:
           type: string
         privateKey:
@@ -239,3 +254,24 @@ components:
         createdAt:
           type: string
           format: date-time
+
+    CreateSSHKeyRequest:
+      type: object
+      properties:
+        generate:
+          type: boolean
+          description: "Indicates whether a key should be generated"
+        publicKey:
+          type: string
+          description: "Public key to import, required if 'generate' is false"
+      required:
+        - generate
+
+    UpdateSSHKeyRequest:
+      type: object
+      properties:
+        publicKey:
+          type: string
+          description: "New public key"
+      required:
+        - publicKey
