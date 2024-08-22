@@ -8,8 +8,9 @@ namespace Kubernox.Domain.Interfaces
 {
     public interface IBaseRepository<T> where T : class
     {
-        IEnumerable<T> QueryAllAsync();
-        T QueryOnByIdAsync(Guid id);
+        Task<List<T>> QueryAllAsync();
+        Task<T?> QueryOnByIdAsync(Guid id);
         void InsertAsync(T entity);
+        void UpdateAsync(T entity);
     }
 }

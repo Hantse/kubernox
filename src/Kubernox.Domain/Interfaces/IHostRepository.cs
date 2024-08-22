@@ -2,7 +2,7 @@
 
 namespace Kubernox.Domain.Interfaces
 {
-    public interface IUserRepository : IBaseRepository<User>
+    public interface IHostRepository : IBaseRepository<Host>
     {
     }
 }

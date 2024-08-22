@@ -1,15 +1,14 @@
 {
   "descriptionHash": "537CECB1A6917BAD2F04112DD2D7342DA6DE42C19BC7B17FB9373121210FC3262918054E04CE60584998728C28788EC28C1872C99EF9D617C64FD6BB0D0AFB3F",
-  "descriptionLocation": "../openapi.yaml",
+  "descriptionLocation": "..\\openapi.yaml",
   "lockFileVersion": "1.0.0",
-  "kiotaVersion": "1.17.0",
+  "kiotaVersion": "1.11.1",
   "clientClassName": "KubernoxClient",
   "clientNamespaceName": "Kubernox.Client",
   "language": "CSharp",
   "usesBackingStore": false,
   "excludeBackwardCompatible": false,
   "includeAdditionalData": true,
-  "disableSSLValidation": false,
   "serializers": [
     "Microsoft.Kiota.Serialization.Json.JsonSerializationWriterFactory",
     "Microsoft.Kiota.Serialization.Text.TextSerializationWriterFactory",

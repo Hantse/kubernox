@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Kubernox.Domain.Entities;
+﻿using Kubernox.Domain.Entities;
 using Kubernox.Domain.Interfaces;
 using Kubernox.Infrastructure.Contexts;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace Kubernox.Infrastructure.Repositories
 {
@@ -17,17 +13,22 @@ namespace Kubernox.Infrastructure.Repositories
     {
         public void InsertAsync(SshKey entity)
         {
-            throw new NotImplementedException();
+            applicationWriteDbContext.SshKeys.Add(entity);
         }
 
-        public IEnumerable<SshKey> QueryAllAsync()
+        public Task<List<SshKey>> QueryAllAsync()
         {
-            throw new NotImplementedException();
+            return applicationReadDbContext.SshKeys.ToListAsync();
         }
 
-        public SshKey QueryOnByIdAsync(Guid id)
+        public Task<SshKey?> QueryOnByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return applicationReadDbContext.SshKeys.FirstOrDefaultAsync(s => s.Id == id);
+        }
+
+        public void UpdateAsync(SshKey entity)
+        {
+            applicationWriteDbContext.SshKeys.Update(entity);
         }
     }
 }
