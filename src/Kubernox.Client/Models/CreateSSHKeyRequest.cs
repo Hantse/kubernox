@@ -15,6 +15,14 @@ namespace Kubernox.Client.Models
         public IDictionary<string, object> AdditionalData { get; set; }
         /// <summary>Indicates whether a key should be generated</summary>
         public bool? Generate { get; set; }
+        /// <summary>Private key to import, required if &apos;generate&apos; is false</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? PrivateKey { get; set; }
+#nullable restore
+#else
+        public string PrivateKey { get; set; }
+#endif
         /// <summary>Public key to import, required if &apos;generate&apos; is false</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -49,6 +57,7 @@ namespace Kubernox.Client.Models
             return new Dictionary<string, Action<IParseNode>>
             {
                 { "generate", n => { Generate = n.GetBoolValue(); } },
+                { "privateKey", n => { PrivateKey = n.GetStringValue(); } },
                 { "publicKey", n => { PublicKey = n.GetStringValue(); } },
             };
         }
@@ -60,6 +69,7 @@ namespace Kubernox.Client.Models
         {
             _ = writer ?? throw new ArgumentNullException(nameof(writer));
             writer.WriteBoolValue("generate", Generate);
+            writer.WriteStringValue("privateKey", PrivateKey);
             writer.WriteStringValue("publicKey", PublicKey);
             writer.WriteAdditionalData(AdditionalData);
         }

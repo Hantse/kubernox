@@ -17,6 +17,14 @@ namespace Kubernox.Client.Models
         public DateTimeOffset? CreatedAt { get; set; }
         /// <summary>The id property</summary>
         public Guid? Id { get; set; }
+        /// <summary>The name property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? Name { get; set; }
+#nullable restore
+#else
+        public string Name { get; set; }
+#endif
         /// <summary>The privateKey property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -60,6 +68,7 @@ namespace Kubernox.Client.Models
             {
                 { "createdAt", n => { CreatedAt = n.GetDateTimeOffsetValue(); } },
                 { "id", n => { Id = n.GetGuidValue(); } },
+                { "name", n => { Name = n.GetStringValue(); } },
                 { "privateKey", n => { PrivateKey = n.GetStringValue(); } },
                 { "publicKey", n => { PublicKey = n.GetStringValue(); } },
             };
@@ -73,6 +82,7 @@ namespace Kubernox.Client.Models
             _ = writer ?? throw new ArgumentNullException(nameof(writer));
             writer.WriteDateTimeOffsetValue("createdAt", CreatedAt);
             writer.WriteGuidValue("id", Id);
+            writer.WriteStringValue("name", Name);
             writer.WriteStringValue("privateKey", PrivateKey);
             writer.WriteStringValue("publicKey", PublicKey);
             writer.WriteAdditionalData(AdditionalData);

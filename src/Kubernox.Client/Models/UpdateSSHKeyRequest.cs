@@ -13,13 +13,13 @@ namespace Kubernox.Client.Models
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>New public key</summary>
+        /// <summary>The name property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public string? PublicKey { get; set; }
+        public string? Name { get; set; }
 #nullable restore
 #else
-        public string PublicKey { get; set; }
+        public string Name { get; set; }
 #endif
         /// <summary>
         /// Instantiates a new <see cref="global::Kubernox.Client.Models.UpdateSSHKeyRequest"/> and sets the default values.
@@ -46,7 +46,7 @@ namespace Kubernox.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "publicKey", n => { PublicKey = n.GetStringValue(); } },
+                { "name", n => { Name = n.GetStringValue(); } },
             };
         }
         /// <summary>
@@ -56,7 +56,7 @@ namespace Kubernox.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             _ = writer ?? throw new ArgumentNullException(nameof(writer));
-            writer.WriteStringValue("publicKey", PublicKey);
+            writer.WriteStringValue("name", Name);
             writer.WriteAdditionalData(AdditionalData);
         }
     }

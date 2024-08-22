@@ -235,6 +235,8 @@ components:
         id:
           type: string
           format: uuid
+        name:
+          type: string
         publicKey:
           type: string
         createdAt:
@@ -247,6 +249,8 @@ components:
         id:
           type: string
           format: uuid
+        name:
+          type: string
         publicKey:
           type: string
         privateKey:
@@ -264,14 +268,16 @@ components:
         publicKey:
           type: string
           description: "Public key to import, required if 'generate' is false"
+        privateKey:
+          type: string
+          description: "Private key to import, required if 'generate' is false"
       required:
         - generate
 
     UpdateSSHKeyRequest:
       type: object
       properties:
-        publicKey:
+        name:
           type: string
-          description: "New public key"
       required:
-        - publicKey
+        - name
